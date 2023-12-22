@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const Body = () => {
   const dataList = {
     categories: [
@@ -108,20 +110,49 @@ const Body = () => {
       },
     ],
   };
+  let [categoryList, setCategoryList] = useState(dataList.categories);
 
+  let [cartList, setCartList] = useState(0);
+  console.log("CAT---" + categoryList);
   const topRated = () => {
-    dataList.categories.filter((category) => {
-      if (parseInt(category.idCategory) > 5) {
-        console.log(dataList);
-      }
-      return dataList;
-    });
+    //arr = [];
+    categoryList = dataList.categories.filter(
+      (category) => category.idCategory > 5
+    );
+    setCategoryList(categoryList);
   };
+  // };
+  // let arr = dataList.categories;
+  // console.log(arr);
   return (
-    <div>
-      <button onClick={topRated()}>Top rated category</button>
+    <div className="mt-6 mb-3">
+      <div className="w-3/4 rounded-lg shadow p-3 bg-red-100 m-auto ">
+        <button
+          className="p-1 bg-red-500 text-white rounded-md"
+          onClick={topRated}
+        >
+          Top rated category
+        </button>
+        <button
+          className="p-1 bg-slate-500 text-white rounded-md"
+          onClick={() => {
+            setCategoryList(dataList.categories);
+            console.log("SADAD" + categoryList);
+          }}
+        >
+          Reset
+        </button>
+        <button
+          onClick={() => {
+            setCartList(cartList + 1);
+          }}
+        >
+          Add to cart
+        </button>
+        <h1>{cartList}</h1>
+      </div>
       <div className="flex bg-gray-50 flex-wrap justify-around gap-1  p-4 ">
-        {dataList.categories.map((category) => {
+        {categoryList?.map((category) => {
           return (
             <div
               className="h-full w-52 bg-white hover:bg-orange-100 p-4 cursor-pointer mt-5"
